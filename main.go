@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -21,7 +22,20 @@ var (
 	buildSource = "unknown"
 )
 
+func startLoging() {
+	logFile, err := os.OpenFile("../lazydog.log", (os.O_RDWR | os.O_CREATE | os.O_APPEND), 0666)
+	if err != nil {
+		log.Fatalf("file=logFile err=%s", err.Error())
+	}
+
+	multiLogFile := io.MultiWriter(os.Stdout, logFile)
+
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	log.SetOutput(multiLogFile)
+}
+
 func main() {
+	startLoging()
 	flaggy.DefaultParser.ShowVersionWithVersionFlag = false
 
 	repoPath := ""
@@ -53,6 +67,13 @@ func main() {
 	flaggy.String(&gitDir, "g", "git-dir", "equivalent of the --git-dir git argument")
 
 	flaggy.Parse()
+
+	log.Println(repoPath)
+	log.Println(filterPath)
+	log.Println(dump)
+	log.Println(logFlag)
+	log.Println(debuggingFlag)
+	log.Println(gitDir)
 
 	if repoPath != "" {
 		if workTree != "" || gitDir != "" {
