@@ -109,6 +109,7 @@ func NewApp(config config.AppConfigurer, filterPath string) (*App, error) {
 
 	app.OSCommand = oscommands.NewOSCommand(app.Log, config)
 
+	// lazygit自体のアップデート用
 	app.Updater, err = updates.NewUpdater(app.Log, config, app.OSCommand, app.Tr)
 	if err != nil {
 		return app, err
@@ -190,7 +191,11 @@ func (app *App) setupRepo() (bool, error) {
 
 		// Offer to initialize a new repository in current directory.
 		fmt.Print(app.Tr.SLocalize("CreateRepo"))
+
+		// ユーザーの入力を受け付ける
 		response, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+
+		// "y"以外が入力された場合
 		if strings.Trim(response, " \n") != "y" {
 			// check if we have a recent repo we can open
 			recentRepos := app.Config.GetAppState().RecentRepos

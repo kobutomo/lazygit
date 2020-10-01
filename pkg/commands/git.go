@@ -168,6 +168,7 @@ func setupRepository(openGitRepository func(string) (*gogit.Repository, error), 
 	return repository, err
 }
 
+// statを引数として受け取ってるのはテスタビリティのため？
 func findDotGitDir(stat func(string) (os.FileInfo, error), readFile func(filename string) ([]byte, error)) (string, error) {
 	if env.GetGitDirEnv() != "" {
 		return env.GetGitDirEnv(), nil
