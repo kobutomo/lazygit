@@ -55,7 +55,7 @@ func getLogLevel() logrus.Level {
 	strLevel := os.Getenv("LOG_LEVEL")
 	level, err := logrus.ParseLevel(strLevel)
 	if err != nil {
-		return logrus.DebugLevel
+		return logrus.WarnLevel
 	}
 	return level
 }

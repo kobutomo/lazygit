@@ -68,13 +68,6 @@ func main() {
 
 	flaggy.Parse()
 
-	log.Println(repoPath)
-	log.Println(filterPath)
-	log.Println(dump)
-	log.Println(logFlag)
-	log.Println(debuggingFlag)
-	log.Println(gitDir)
-
 	if repoPath != "" {
 		if workTree != "" || gitDir != "" {
 			log.Fatal("--path option is incompatible with the --work-tree and --git-dir options")
