@@ -17,6 +17,7 @@ import (
 	yaml "github.com/jesseduffield/yaml"
 )
 
+// add some com
 var (
 	commit      string
 	version     = "unversioned"
